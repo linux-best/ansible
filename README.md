@@ -1,2 +1,2 @@
 # ansible
-my ansible toturial
+my ansible tutorial
