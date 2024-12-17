@@ -1,0 +1,20 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+   - name: Install Clamav
+     apt:
+       pkg:
+         - clamav
+         - clamav-daemon
+       state: latest
+       update_cache: true
+     when: ansible_distribution in ["Ubuntu","Debian"]
+
+
+   - name: show patterns
+     shell: |
+       systemctl status clamav-freshclam.service
+       systemctl stop clamav-freshclam.service
