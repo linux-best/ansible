@@ -4,21 +4,13 @@
   become: true
   tasks:
 
-  - name: Update Repository Index
-    apt:
-      update-cache: true
-    when: ansible_distribution == "CentOS" or ansible_distribution in ["Debian","Ubuntu"]
-
   - name: Installing Tree
     apt:
-      name: tree
+      name:
+        - "{{ pkg1 }}"
+        - "{{ pkg2 }}"
       state: latest
-    when: ansible_distribution == "Ubuntu"
-
-  - name: install apache_server
-    apt:
-      name: apache2
-      state: latest
+      update_cache: true
     when: ansible_distribution == "Ubuntu"
 
   - name: Remove Packages
