@@ -7,8 +7,8 @@
   - name: Installing Tree
     apt:
       name:
-        - "{{ pkg1 }}"
-        - "{{ pkg2 }}"
+        - tree  #       - "{{ pkg1 }}"
+        - apache2  #       - "{{ pkg2 }}"
       state: latest
       update_cache: true
     when: ansible_distribution == "Ubuntu"

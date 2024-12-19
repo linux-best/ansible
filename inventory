@@ -1,1 +1,5 @@
-192.168.114.131 pkg1=tree pkg2=apache2
+[dc_client]
+192.168.114.131
+
+[home_client]
+192.168.114.130

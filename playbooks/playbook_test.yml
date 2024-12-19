@@ -1,6 +1,6 @@
 ---
 
-- hosts: all
+- hosts: dc_client
   become: true
   tasks:
 
