@@ -4,7 +4,31 @@
   become: true
   tasks:
 
+  - name: Remove the useless Packages
+    tags: autoremove
+    apt:
+       autoremove: yes
+       purge: yes
+
+  - name: Update the Packages
+    tags: ubuntu
+    apt:
+      update-cache: true
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Update the Packages
+    tags: centos
+    dnf:
+      update_cache: true
+    when: ansible_distribution == "CentOS"
+
+
+- hosts: dc_client
+  become: true
+  tasks:
+
   - name: Installing Tree
+    tags: pkg
     apt:
       name:
         - tree  #       - "{{ pkg1 }}"
@@ -14,6 +38,7 @@
     when: ansible_distribution == "Ubuntu"
 
   - name: Remove Packages
+    tags: rm pkg
     apt:
       name: apache2
       state: absent
