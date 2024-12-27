@@ -18,6 +18,8 @@
      shell: |
        echo "hello i'm using ansible ." > hello.sh
 
+  - name: chnage 
+
 
 - hosts: all
   become: true
@@ -31,6 +33,13 @@
       owner: root
       group: root
       mode: 0644
+
+  - name: service manegnet
+    tags: httpd
+    service:
+      name: apache2
+      state: started
+      enabled: true
 
 - hosts: all
   become: true
