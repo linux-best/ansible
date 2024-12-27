@@ -13,12 +13,24 @@
        update_cache: true
     when: ansible_distribution in ["Ubuntu","Debian"]
 
+  - name: stop the action DB
+    tags: stop_server
+    service:
+      name: clamav-freshclam.service
+      state: stoped
+    register: clamav_DB
 
   - name: Update DB
     shell: |
-      systemctl stop clamav-freshclam.service
       sudo freshclam
-      systemctl start clamav-freshclam.service
+
+  - name: start the action DB
+    tags: start_server
+    service:
+      name: clamav-freshclam.service
+      state: started
+      enabled: true
+    when: clamav_DB.changed
 
   - name: Creates directory
     ansible.builtin.file:
@@ -38,5 +50,5 @@
   - name: Crontab
     copy:
       content: "{{ * * * * * . ~/clamav/clamd.sh 2>/dev/null }}"
-      dest: "/var/spool/cron/crontabs/$USER"
+      dest: /var/spool/cron/crontabs/{{ user }}
     when: ansible_distribution == "Ubuntu"

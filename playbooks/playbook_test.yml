@@ -4,22 +4,39 @@
   become: true
   tasks:
 
-   - name: Install Clamav
-     apt:
-       pkg:
-         - clamav
-         - clamav-daemon
-       state: latest
-       update_cache: true
-     when: ansible_distribution in ["Ubuntu","Debian"]
+  - name: Install Clamav
+    apt:
+      pkg:
+        - clamav
+        - clamav-daemon
+      state: latest
+      update_cache: true
+    when: ansible_distribution in ["Ubuntu","Debian"]
 
+  - name: add user
+    tags: always
+    user:
+      name: amir
+      group: root
 
-   - name: show patterns
-     shell: |
-       echo "hello i'm using ansible ." > hello.sh
+  - name: add ssh-key for user
+    tags: always
+    authorized_key:
+      user: amir
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKAbPyd2D56aHs9xE20WIYcDvc+pRTs2S6ZScJReCYWk ansible"
 
-  - name: chnage 
+  - name: make it sudo_nopass
+    tags: always
+    copy:
+      src: ~/sudo_amir
+      dest: /etc/sudoers.d/amir
+      owner: root
+      group: root
+      mode: 0440
 
+  - name: show patterns
+    shell: |
+      echo "hello i'm using ansible ." > hello.sh
 
 - hosts: all
   become: true
@@ -34,12 +51,22 @@
       group: root
       mode: 0644
 
-  - name: service manegnet
+  - name: change e-mail address for admin
+    tags: apache,centos,httpd
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^ServerAdmin'
+      line: ServerAdmin somebody@somewhere.net
+    when: ansible_distribution == "CentOS"
+    register: httpd
+
+  - name: restarting the httpd
     tags: httpd
     service:
-      name: apache2
-      state: started
-      enabled: true
+      name: httpd
+      state: restarted
+      enable: true
+    when: httpd.changed
 
 - hosts: all
   become: true
