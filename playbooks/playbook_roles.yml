@@ -1,0 +1,29 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: update the system_cache
+    tags: update_ubuntu
+    apt:
+      update_cache: true
+    changed_when: false
+    when: ansible_distribution == "Ubuntu"
+
+  - name: update the system_cache(CentOS)
+    tags: update_centos
+    dnf:
+      update_cache: true
+    changed_when: false
+    when: ansible_distribution == "CentOS"
+
+- hosts: dc_client
+  become: true
+  roles:
+    - dc_client
+
+- hosts: home_client
+  become: true
+  roles:
+    - home_client

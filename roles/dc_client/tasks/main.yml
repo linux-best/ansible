@@ -1,0 +1,48 @@
+- name: Install Clamav
+  apt:
+    pkg:
+      - clamav
+      - clamav-daemon
+    state: latest
+    update_cache: true
+  when: ansible_distribution in ["Ubuntu","Debian"]
+
+- name: stop the action DB
+  tags: stop_server
+  service:
+    name: clamav-freshclam.service
+    state: stoped
+  register: clamav_DB
+
+- name: Update DB
+  shell: |
+    sudo freshclam
+
+- name: start the action DB
+  tags: start_server
+  service:
+    name: clamav-freshclam.service
+    state: started
+    enabled: true
+  when: clamav_DB.changed
+
+- name: Creates directory
+  ansible.builtin.file:
+    path: ~/clamav
+    state: directory
+
+- name: Import config File
+  copy:
+    src: ~/clamav/clamav.sh
+    dest: ~/clamav/clamav.sh
+
+- name: Import Config File
+  copy:
+    src: ~/clamav/clamd.sh
+    dest: ~/clamav/clamd.sh
+
+- name: Crontab
+  copy:
+    content: "{{ * * * * * . ~/clamav/clamd.sh 2>/dev/null }}"
+    dest: /var/spool/cron/crontabs/{{ user }}
+  when: ansible_distribution == "Ubuntu"

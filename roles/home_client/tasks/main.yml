@@ -1,0 +1,37 @@
+- name: Remove the useless Packages
+  tags: autoremove
+  apt:
+     autoremove: yes
+     purge: yes
+
+- name: Update the Packages
+  tags: ubuntu
+  apt:
+    update-cache: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: Update the Packages
+  tags: centos
+  dnf:
+    update_cache: true
+  when: ansible_distribution == "CentOS"
+
+
+- name: Installing Tree
+  tags: pkg
+  apt:
+    name:
+      - tree  #       - "{{ pkg1 }}"
+      - apache2  #       - "{{ pkg2 }}"
+    state: latest
+    update_cache: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: Remove Packages
+  tags: rm pkg
+  apt:
+    name: apache2
+    state: absent
+  when: ansible_distribution == "Ubuntu"
+
+# if we want to do all this stuff for CentOS we can simply change the -Module[name] and the packages[name] because it's different on CentOS distribution
