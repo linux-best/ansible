@@ -1,0 +1,13 @@
+#- name: restart_DB_clamav
+#  tags: restart_DB
+#  service:
+#    name: "{{ clamav_DB  }}"
+#    state: restarted
+#    enabled: true
+
+- name: restart apache2.service
+  tags: restart_apache2
+  service:
+    name: "{{ apache_package_name  }}"
+    state: restarted
+    enabled: true

@@ -1,8 +1,35 @@
 ---
 
-- hosts: all
+- hosts: dc_client
   become: true
   tasks:
+
+  - name: install packages
+    tags: apache,httpd
+    apt:
+      pkg:
+        - "{{ apache_package_name  }}"
+        - "{{ php_package_name  }}"
+    when: ansible_distribution == "Ubuntu"
+
+  - name: service dead
+    tags: service_apache2_stoped
+    service:
+      name: "{{ apache_service }}"
+      state: stopped
+    register: service
+
+  - name: service alive
+    tags: apache_service_start
+    service:
+      name: "{{ apache_service  }}"
+      state: started
+      enabled: true
+    when: service.changed
+
+- hosts: all
+  become: true
+  pre_tasks:
 
   - name: Remove the useless Packages
     tags: autoremove

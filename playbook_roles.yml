@@ -23,7 +23,7 @@
   roles:
     - dc_client
 
-- hosts: home_client
-  become: true
-  roles:
-    - home_client
+#- hosts: home_client
+#  become: true
+#  roles:
+#    - home_client
