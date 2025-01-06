@@ -1,9 +1,13 @@
 #Ubuntu -
+ssh_users: "javande amir"
+user: javande
 apache_package_name: apache2
 apache_service: apache2
 php_package_name: libapache2-mod-php
+ssh_templates_file: ssh_config_ubuntu.j2
 
 #CentOS -
 #apache_package_name: httpd
 #apache_service: httpd
 #php_package_name: php
+#ssh_templates_file: ssh_config_centos.j2

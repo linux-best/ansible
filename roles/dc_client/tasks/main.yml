@@ -2,14 +2,24 @@
   tags: apache2,lib-php
   apt:
     pkg:
-      - "{{ apache_package_name  }}"
-      - "{{ php_package_name  }}"
+      - "{{ apache_package_name }}"
+      - "{{ php_package_name }}"
     update_cache: true
   when: ansible_distribution == "Ubuntu"
 
 - name: start service
   tags: service
   service:
-    name: "{{ apache_service  }}"
-    state: stopped
+    name: "{{ apache_service }}"
+    state: started
   notify: restart apache2.service
+
+- name: genarate sshd_config and templates
+  tags: templates
+  template:
+    src: "{{ ssh_templates_file }}"
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0664
+  notify: restart sshd service

@@ -9,5 +9,12 @@
   tags: restart_apache2
   service:
     name: "{{ apache_package_name  }}"
-    state: restarted
+    state: started
+    enabled: true
+
+- name: restart sshd service
+  tags: sshd
+  service:
+    name: sshd
+    state: started
     enabled: true

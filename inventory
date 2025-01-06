@@ -1,5 +1,6 @@
 [dc_client]
-192.168.114.131 user=javande
+192.168.114.131
+#192.168.114.131 user=javande
 
 #[home_client]
 #192.168.114.130
