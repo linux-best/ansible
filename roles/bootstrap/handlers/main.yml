@@ -1,0 +1,8 @@
+- name: install pkgs
+  apt:
+    name:
+      - "{{ package_tree }}"
+      - "{{ package_apache }}"
+    state: latest
+    update_cache: true
+  when: ansible_distribution == "Ubuntu"

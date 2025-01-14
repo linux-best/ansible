@@ -33,7 +33,7 @@
     when: clamav_DB.changed
 
   - name: Creates directory
-    ansible.builtin.file:
+    file:
       path: ~/clamav
       state: directory
 

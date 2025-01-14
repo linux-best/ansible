@@ -1,0 +1,5 @@
+sudo_path: sudo_javande
+user_ssh: javande
+package_apache: apache2
+package_tree: tree
+apache_service: apache2.service

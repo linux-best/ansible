@@ -35,8 +35,17 @@
       mode: 0440
 
   - name: show patterns
+    tags: pattern
     shell: |
-      echo "hello i'm using ansible ." > hello.sh
+      echo "hello i am a devops ." > hello.sh
+
+  - name: change patterns
+    tags: pattern
+    lineinfile:
+      path: ~/hello.sh
+      regexp: '^hello i am a devops'
+      line: hello i am amir
+    when: ansible_distribution == "Ubuntu"
 
 - hosts: all
   become: true

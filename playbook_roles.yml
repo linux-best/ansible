@@ -22,6 +22,7 @@
   become: true
   roles:
     - dc_client
+    #- bootstrap
 
 #- hosts: home_client
 #  become: true

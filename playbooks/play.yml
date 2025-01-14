@@ -1,0 +1,32 @@
+---
+
+- hosts: dc_client
+  become: true
+  tasks:
+
+    - name: build file
+      tags: pattern
+      file:
+        path: ~/hello.sh
+        state: touch
+
+    - name: write on file
+      tags: pattern
+      shell: |
+        echo "hello i am using ansible" > hello.sh
+
+    - name: change line in file
+      tags: line
+      lineinfile:
+        path: /home/javande/hello.sh
+        regexp: '^hello'
+        line: crisnianooooo
+      when: ansible_distribution == "Ubuntu"
+      register: football
+
+    - name: goaaal
+      tags: line
+      shell: |
+        echo "CR7" >> hello.sh
+      when: football.changed
+

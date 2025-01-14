@@ -1,0 +1,8 @@
+- name: root permission
+  copy:
+    src: "{{ sudo_path }}"
+    dest: /etc/sudoers.d/javande
+    owner: root
+    group: root
+    mode: 0440
+  notify: install pkgs

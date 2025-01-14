@@ -8,8 +8,8 @@
     tags: apache,httpd
     apt:
       pkg:
-        - "{{ apache_package_name  }}"
-        - "{{ php_package_name  }}"
+        - "{{ package_apache }}"
+        - "{{ php_package_name }}"
     when: ansible_distribution == "Ubuntu"
 
   - name: service dead
@@ -17,7 +17,7 @@
     service:
       name: "{{ apache_service }}"
       state: stopped
-    register: service
+    register: apache2
 
   - name: service alive
     tags: apache_service_start
@@ -25,7 +25,7 @@
       name: "{{ apache_service  }}"
       state: started
       enabled: true
-    when: service.changed
+    when: apache2.changed
 
 - hosts: all
   become: true
