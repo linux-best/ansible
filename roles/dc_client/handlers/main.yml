@@ -18,3 +18,10 @@
     name: sshd
     state: started
     enabled: true
+
+- name: update after process
+  tags: update_ubuntu
+  apt:
+    update_cache: true
+    upgrade_dist: true
+  when: ansible_distribution == "Ubuntu"
