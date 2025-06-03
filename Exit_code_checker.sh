@@ -1,7 +1,7 @@
 # script
 
 git reset --hard origin/main
-git diff --quiet HEAD origin/main
+git diff --ignore-all-space --quiet HEAD origin/main
 
 if [ $? -ne 0 ]
 then
