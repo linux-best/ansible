@@ -1,5 +1,6 @@
 # script
 
+git reset --hard origin/main
 git diff --quiet HEAD origin/main
 
 if [ $? -ne 0 ]
