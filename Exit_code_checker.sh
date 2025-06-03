@@ -1,9 +1,9 @@
 # script
 
-git reset --hard origin/main
-git diff --ignore-all-space --quiet HEAD origin/main
+a=$(git rev-parse origin/main)
+b=$(git rev-parse HEAD)
 
-if [ $? -ne 0 ]
+if [ $a -eq $b ]
 then
 	echo "0"
 else
