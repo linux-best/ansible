@@ -1,3 +1,5 @@
+# script
+
 git diff --quiet HEAD origin/main
 
 if [ $? -ne 0 ]
