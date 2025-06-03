@@ -2,7 +2,7 @@ git diff --quiet HEAD origin/main
 
 if [ $? -ne 0 ]
 then
-	echo "there is no changes"
+	echo "0"
 else
-	echo "there is some changes"
+	echo "1"
 fi
