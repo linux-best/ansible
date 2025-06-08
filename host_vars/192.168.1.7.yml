@@ -1,6 +1,6 @@
 sudo_path: sudo_javande
 user_ssh: javande
-package_apache: apache2
+package_apache_name: apache2
 package_tree: tree
 apache_service: apache2.service
 php_package_name: libapache2-mod-php
